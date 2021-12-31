@@ -11,7 +11,7 @@ namespace Appeals.Persistance
 {
     public sealed class AppealsDbContext : DbContext, IAppealsDbContext
     {
-        public DbSet<Appeal> Appeals { get; set; }
+        public DbSet<Appeal> Appeals { get; set; } = null!;
 
         public AppealsDbContext(DbContextOptions<AppealsDbContext> options)
             : base(options){ }
