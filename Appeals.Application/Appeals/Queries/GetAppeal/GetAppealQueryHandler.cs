@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Appeals.Application.Appeals.Queries.GetAppealDetails
+namespace Appeals.Application.Appeals.Queries.GetAppeal
 {
     internal class GetAppealQueryHandler
         : IRequestHandler<GetAppealQuery, AppealVm>

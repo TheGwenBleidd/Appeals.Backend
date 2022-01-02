@@ -8,13 +8,20 @@ namespace Appeals.Persistance
     public static class DependencyInjection
     {
         public static IServiceCollection AddPersistance(this IServiceCollection services,
-            IConfiguration configuration)
+            IConfiguration? configuration)
         {
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+
             var connectionString = configuration["DbConnection"];
             services.AddDbContext<AppealsDbContext>(options =>
             {
-                options.UseNpgsql(connectionString);
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                    options.UseNpgsql(connectionString);
+                else
+                    throw new Exception("Error Db");
             });
+            
             services.AddScoped(provider =>
             {
                 return GetService(provider);
