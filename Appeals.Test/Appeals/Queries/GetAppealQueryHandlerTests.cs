@@ -37,7 +37,7 @@ namespace Appeals.Test.Appeals.Queries
             // Assert
             result.ShouldBeOfType<AppealVm>();
             result.Title.ShouldBe("Title2");
-            result.CreatedDate.ShouldBe(DateTimeOffset.Now);
+            result.CreatedDate.ShouldBe(DateTime.Today);
         }
     }
 }
