@@ -4,15 +4,10 @@ using Appeals.Domain;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Appeals.Application.Appeals.Queries.GetAppeal
 {
-    internal class GetAppealQueryHandler
+    public class GetAppealQueryHandler
         : IRequestHandler<GetAppealQuery, AppealVm>
     {
         private readonly IAppealsDbContext _db;

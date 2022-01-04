@@ -5,6 +5,7 @@ using Appeals.Application.Appeals.Queries.GetAppeal;
 using Appeals.Application.Appeals.Queries.GetAppealList;
 using Appeals.WebApi.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appeals.WebApi.Controllers
@@ -20,6 +21,7 @@ namespace Appeals.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<AppealListVm>> GetAll() 
         {
             var query = new GetAppealListQuery
@@ -31,6 +33,7 @@ namespace Appeals.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<AppealVm>> Get(Guid id) 
         {
             var query = new GetAppealQuery
@@ -43,6 +46,7 @@ namespace Appeals.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateAppealDto model) 
         {
             var command = _mapper.Map<CreateAppealCommand>(model);
@@ -52,6 +56,7 @@ namespace Appeals.WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] UpdateAppealDto model) 
         {
             var command = _mapper.Map<UpdateAppealCommand>(model);
@@ -61,6 +66,7 @@ namespace Appeals.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id) 
         {
             var command = new DeleteAppealCommand

@@ -2,6 +2,8 @@
 using Appeals.Application.Common.Mappings;
 using Appeals.Application.Interfaces;
 using Appeals.Persistance;
+using Appeals.WebApi.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Reflection;
 
 namespace Appeals.WebApi
@@ -16,10 +18,10 @@ namespace Appeals.WebApi
 
         public void ConfigureServices(IServiceCollection services) 
         {
-            services.AddAutoMapper(config =>
+            services.AddAutoMapper(options =>
             {
-                config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
-                config.AddProfile(new AssemblyMappingProfile(typeof(IAppealsDbContext).Assembly));
+                options.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
+                options.AddProfile(new AssemblyMappingProfile(typeof(IAppealsDbContext).Assembly));
             });
 
             services.AddApplication();
@@ -35,6 +37,18 @@ namespace Appeals.WebApi
                     policy.AllowAnyOrigin();
                 });
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:7133/";
+                    options.Audience = "AppealsWebAPI";
+                    options.RequireHttpsMetadata = false;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,10 +57,12 @@ namespace Appeals.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseExceptionHandler();
+            app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
