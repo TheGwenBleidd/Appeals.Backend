@@ -2,6 +2,7 @@
 using Appeals.Persistance;
 using Appeals.Test.Common;
 using AutoMapper;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;

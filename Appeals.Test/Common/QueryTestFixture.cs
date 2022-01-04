@@ -1,4 +1,5 @@
 ﻿using Appeals.Application.Common.Mappings;
+using Appeals.Application.Interfaces;
 using Appeals.Persistance;
 using AutoMapper;
 using System;
@@ -21,7 +22,7 @@ namespace Appeals.Test.Common
             var configurationProvider = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AssemblyMappingProfile(
-                    typeof(AppealsDbContext).Assembly));
+                    typeof(IAppealsDbContext).Assembly));
             });
             Mapper = configurationProvider.CreateMapper();
         }
