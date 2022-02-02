@@ -12,10 +12,7 @@ namespace Appeals.WebApi.Controllers
         
         protected IMediator GetMediator() 
         {
-            var mediatorService = HttpContext.RequestServices.GetService<IMediator>();
-            if (mediatorService == null)
-                throw new ArgumentException(nameof(mediatorService));
-
+            var mediatorService = HttpContext.RequestServices.GetRequiredService<IMediator>();
             _mediator = mediatorService;
             return _mediator;
         }
